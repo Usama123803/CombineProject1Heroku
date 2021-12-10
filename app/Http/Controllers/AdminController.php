@@ -47,7 +47,7 @@ class AdminController extends Controller
             'age'             => 'required|string',
             'email'           => 'required|string|email|unique:users',
             'password'        => 'required|confirmed',
-            'profile_picture' => 'required',
+            // 'profile_picture' => 'required',
         ]);
 
         // Mail_Sending_Process
@@ -61,7 +61,7 @@ class AdminController extends Controller
                 'age'             => $request->age,
                 'email'           => $request->email,
                 'password'        => Hash::make($request->password),
-                'profile_picture' => $request->file('profile_picture')->store('Images_Stored'),
+                // 'profile_picture' => $request->file('profile_picture')->store('Images_Stored'),
                 'remember_token'  => $jwt_token,
         ]);
 
