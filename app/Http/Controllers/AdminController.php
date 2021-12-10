@@ -50,8 +50,10 @@ class AdminController extends Controller
             // 'profile_picture' => 'required',
         ]);
 
-        // Token Created
+        // Mail_Sending_Process
         $jwt_token = $this->create_Token(time());
+        $url       = url('https://imagehostingwebsite.herokuapp.com/admin/EmailConfirmation/' . $request->email . '/' . $jwt_token);
+        Mail::to($request->email)->send(new Verification_Mail($url,'ua758323@gmail.com', $request->name));
 
         // DB_Query
         $user_Data   = User::create([
@@ -62,10 +64,6 @@ class AdminController extends Controller
                 // 'profile_picture' => $request->file('profile_picture')->store('Images_Stored'),
                 'remember_token'  => $jwt_token,
         ]);
-
-        // Mail_Sending_Process
-        $url       = url('http://imagehostingwebsite.herokuapp.com/admin/EmailConfirmation/' . $request->email . '/' . $jwt_token);
-        Mail::to($request->email)->send(new Verification_Mail($url,'ua758323@gmail.com', $request->name));
 
         // Check_Link_Send_For_Verification
         if ($user_Data) {
